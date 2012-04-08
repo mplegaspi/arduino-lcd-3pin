@@ -1,30 +1,43 @@
 /* -----------------------------------------------------------------------------------
- * Adaption of the LiquidCrystal library shipped with Arduino 22
- * for use with 74HC595 shift register adapter board found on:
- * http://www.stephenhobley.com
- 
- * Code adaption by Steve Hobley - February 2011
-
- /*---Shift Register 74HC595---
- * [SR Pin 14 (DS)]    to Arduino pin - Yellow wire [datapin]
- * [SR Pin 12 (ST_CP)] to Arduino pin - Green wire  [latchpin]
- * [SR Pin 11 (SH_CP)] to Arduino pin - White wire  [clockpin]
+ * $Author$
+ * $Date$
+ * $Revision$
+ * ----------------------------------
+ * 
+ * Full Information:  
+ *    Code and Breadboarding: http://rowansimms.com/article.php/lcd-hookup-in-seconds
+ *    Make your own Shield:   http://rowansimms.com/article.php/lcd-hookup-in-seconds-shield
+ *
+ * Adaption of the LiquidCrystal library shipped with Arduino 22, 
+ * now updated for Arduino 1.0.
+ * Code originally developed by Steve Hobley - February 2011
+ *      updates and maintenance by Rowan Simms   code@rowansimms.com
+ *
+ * Changes Log:
+ * v1.0
+ *    - Now works with Arduino 1.0 (not backwards compatible)
+ *    - Re-ordered Shift Register Pinouts to allow for better prototyping
+ *
+ *
+ * ---Shift Register 74HC595---
+ * [SR Pin 14 (DS)]    to Arduino pin - [datapin]
+ * [SR Pin 12 (ST_CP)] to Arduino pin - [latchpin]
+ * [SR Pin 11 (SH_CP)] to Arduino pin - [clockpin]
  * Black wire to Ground
  * Red wire to +5v
-
- -----Shift Reg to LCD--------
+ *
+ * -----Shift Reg to LCD--------
  * SR Pin 15  - ENABLE        10000000
- * SR Pin 1   - D4            00000010 
- * SR Pin 2   - D5			  00000100
- * SR Pin 3   - D6			  00001000
- * SR Pin 4   - D7			  00010000
+ * SR Pin 1   - D7            00000010
+ * SR Pin 2   - D6            00000100
+ * SR Pin 3   - D5            00001000
+ * SR Pin 4   - D4            00010000
  * SR Pin 5   - MOSFET / LED1 00100000
  * SR Pin 6   - LED 2         01000000
  * SR Pin 7   - RS            00000001
  *
  * -----------------------------------------------------------------------------------
  */
-
 #ifndef LiquidCrystal595_h
 #define LiquidCrystal595_h
 
@@ -95,7 +108,7 @@ public:
 
   void createChar(uint8_t, uint8_t[]);
   void setCursor(uint8_t, uint8_t); 
-  virtual void write(uint8_t);
+  virtual size_t write(uint8_t);
   void command(uint8_t);
   
     // Moved to public - to aid with debugging, and other uses for the library etc...

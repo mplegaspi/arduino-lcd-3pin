@@ -1,23 +1,37 @@
 /* -----------------------------------------------------------------------------------
- * Adaption of the LiquidCrystal library shipped with Arduino 22
- * for use with 74HC595 shift register adapter board found on:
- * http://www.stephenhobley.com
- 
- * Code adaption by Steve Hobley - February 2011
-
- /*---Shift Register 74HC595---
- * [SR Pin 14 (DS)]    to Arduino pin - Yellow wire [datapin]
- * [SR Pin 12 (ST_CP)] to Arduino pin - Green wire  [latchpin]
- * [SR Pin 11 (SH_CP)] to Arduino pin - White wire  [clockpin]
+ * $Author$
+ * $Date$
+ * $Revision$
+ * ----------------------------------
+ * 
+ * Full Information:  
+ *    Code and Breadboarding: http://rowansimms.com/article.php/lcd-hookup-in-seconds
+ *    Make your own Shield:   http://rowansimms.com/article.php/lcd-hookup-in-seconds-shield
+ *
+ * Adaption of the LiquidCrystal library shipped with Arduino 22, 
+ * now updated for Arduino 1.0.
+ * Code originally developed by Steve Hobley - February 2011
+ *      updates and maintenance by Rowan Simms   code@rowansimms.com
+ *
+ * Changes Log:
+ * v1.0
+ *    - Now works with Arduino 1.0 (not backwards compatible)
+ *    - Re-ordered Shift Register Pinouts to allow for better prototyping
+ *
+ *
+ * ---Shift Register 74HC595---
+ * [SR Pin 14 (DS)]    to Arduino pin - [datapin]
+ * [SR Pin 12 (ST_CP)] to Arduino pin - [latchpin]
+ * [SR Pin 11 (SH_CP)] to Arduino pin - [clockpin]
  * Black wire to Ground
  * Red wire to +5v
-
- -----Shift Reg to LCD--------
+ *
+ * -----Shift Reg to LCD--------
  * SR Pin 15  - ENABLE        10000000
- * SR Pin 1   - D4            00000010 
- * SR Pin 2   - D5			  00000100
- * SR Pin 3   - D6			  00001000
- * SR Pin 4   - D7			  00010000
+ * SR Pin 1   - D7            00000010
+ * SR Pin 2   - D6            00000100
+ * SR Pin 3   - D5            00001000
+ * SR Pin 4   - D4            00010000
  * SR Pin 5   - MOSFET / LED1 00100000
  * SR Pin 6   - LED 2         01000000
  * SR Pin 7   - RS            00000001
@@ -25,23 +39,23 @@
  * -----------------------------------------------------------------------------------
  */
 // 595 mappings - LED1 is also the backlight controller
+
 #define ENABLE_PIN  B00000001
 #define RS_PIN		B10000000
 #define LED1_PIN    B00100000
 #define LED2_PIN    B01000000
 #define DATABITS	B00011110
-
-#define PIN_D4		B00000010
-#define PIN_D5		B00000100
-#define PIN_D6		B00001000
-#define PIN_D7		B00010000
+#define PIN_D4		B00010000
+#define PIN_D5		B00001000
+#define PIN_D6		B00000100
+#define PIN_D7		B00000010
 
 #include "LiquidCrystal595.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
-#include "WProgram.h"
+#include "Arduino.h"
 
 // When the display powers up, it is configured as follows:
 //
@@ -276,7 +290,7 @@ inline void LiquidCrystal595::command(uint8_t value) {
   send(value, LOW);
 }
 
-inline void LiquidCrystal595::write(uint8_t value) {
+inline size_t LiquidCrystal595::write(uint8_t value) {
   send(value, HIGH);
 }
 
